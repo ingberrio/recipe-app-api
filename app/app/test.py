@@ -13,7 +13,6 @@ class CalcTest(SimpleTestCase):
         res = calc.add(5, 6)
 
         self.assertEqual(res, 11)
-    
 
     def test_substrac_number(self):
         """Test substraction numbers together"""
