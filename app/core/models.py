@@ -1,7 +1,6 @@
 """
 Database models.
 """
-from statistics import mode
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import (
@@ -58,14 +57,26 @@ class Recipe(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2)
     link = models.CharField(max_length=255, blank=True)
     tags = models.ManyToManyField('Tag')
-    ingredient = models.ManyToManyField('Ingredient')
+    ingredients = models.ManyToManyField('Ingredient')
 
     def __str__(self):
         return self.title
 
 
 class Tag(models.Model):
-    """Tag for filter recipes."""
+    """Tag for filtering recipes."""
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class Ingredient(models.Model):
+    """Ingredient for recipes."""
     name = models.CharField(max_length=255)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
